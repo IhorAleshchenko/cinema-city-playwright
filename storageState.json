@@ -1,0 +1,157 @@
+{
+  "cookies": [
+    {
+      "name": "__cf_bm",
+      "value": "i5cwbed7gdQ.s0sAdUHNguctETqbnHDld4tweyFwtaI-1774609058.2295573-1.0.1.1-l0gD6OH46pl8Yi4Dvvc_llNvbyNn3Mdd0GsT_wEOV1WUFCGWnyCiNnUrzyBjnXN9q8z.3XL_idd0rRBoeP2087lpTSy1bB3VLmmlF7TdKLlBWFXc4glJ_OQ29g0upt3j",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1774610859.175106,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "lang",
+      "value": "pl_PL",
+      "domain": "www.cinema-city.pl",
+      "path": "/",
+      "expires": 1790416660,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "AVPUID",
+      "value": "f0b96a11941f394cdca289a1b2a2333d",
+      "domain": "cineworld.advertserve.com",
+      "path": "/",
+      "expires": 1806145061.217714,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "C",
+      "value": "1",
+      "domain": ".adform.net",
+      "path": "/",
+      "expires": 1777287461.320868,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "uid",
+      "value": "7884845251987116320",
+      "domain": ".adform.net",
+      "path": "/",
+      "expires": 1779793061.3711,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "OptanonAlertBoxClosed",
+      "value": "2026-03-27T10:57:41.923Z",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1806145061,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_gcl_au",
+      "value": "1.1.1815350001.1774609062",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1782385062,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.1.1186370046.1774609062",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1809169061.947284,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ga_SNBJMLNGZE",
+      "value": "GS2.1.s1774609061$o1$g0$t1774609061$j60$l0$h0",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1809169061.986915,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ga_WRL7NN6MXR",
+      "value": "GS2.1.s1774609061$o1$g0$t1774609061$j60$l0$h0",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1809169061.997608,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_5VQJ0L9VKQ",
+      "value": "GS2.1.s1774609061$o1$g0$t1774609062$j60$l0$h0",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1809169062.008366,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "test_cookie",
+      "value": "CheckForPermission",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1774609962.050624,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "OptanonConsent",
+      "value": "isGpcEnabled=0&datestamp=Fri+Mar+27+2026+11%3A57%3A42+GMT%2B0100+(Central+European+Standard+Time)&version=202510.1.0&browserGpcFlag=0&isIABGlobal=false&consentId=2b2a6c4e-4bbf-4d3d-8789-2448c3fa19f2&interactionCount=1&isAnonUser=1&landingPath=NotLandingPage&groups=C0005%3A1%2CC0003%3A1%2CC0002%3A1%2CC0001%3A1%2CC0004%3A1&hosts=H123%3A1%2CH9%3A1%2CH21%3A1%2CH31%3A1%2CH53%3A1%2CH139%3A1%2CH168%3A1%2CH12%3A1%2CH15%3A1%2CH151%3A1%2CH46%3A1%2CH39%3A1%2CH28%3A1&genVendors=V1%3A1%2C&intType=1",
+      "domain": ".cinema-city.pl",
+      "path": "/",
+      "expires": 1806145062,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://www.cinema-city.pl",
+      "localStorage": [
+        {
+          "name": "previousStatus",
+          "value": "ERROR"
+        },
+        {
+          "name": "_gcl_ls",
+          "value": "{\"schema\":\"gcl\",\"version\":1,\"gcl_ctr\":{\"value\":{\"value\":0,\"timeouts\":0,\"errors\":0,\"creationTimeMs\":1774609061929},\"expires\":1782385061929}}"
+        },
+        {
+          "name": "AVP_UUID",
+          "value": "1dd39186edff61d68d8cd11cb56faf3f"
+        },
+        {
+          "name": "AVP_SESSION_ACTIVITY",
+          "value": "1774609061131"
+        }
+      ]
+    }
+  ]
+}
