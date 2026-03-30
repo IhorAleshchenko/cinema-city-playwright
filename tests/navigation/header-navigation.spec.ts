@@ -9,7 +9,6 @@ test.describe("Header navigation tests", () => {
 
   test.beforeEach(async ({ page }, testInfo) => {
     await page.goto("./");
-    await page.getByRole("button", { name: "Akceptuj wszystkie" }).click();
     header = new Header(page);
     loginPage = new LoginPage(page);
   });
@@ -17,7 +16,7 @@ test.describe("Header navigation tests", () => {
    test.afterEach(async ({ page }) => {
       await page.close();
     });
-    
+
  test("Change language to EN and back to PL", async ({ page }) => {
   //Act
   await header.switchToEnglish();

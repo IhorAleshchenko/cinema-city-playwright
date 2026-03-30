@@ -18,7 +18,20 @@ export class Header {
   readonly cityInput: Locator;
   readonly koronaCinemaCard: Locator;
   readonly selectedCinemaLabel: Locator;
-  readonly repertuarHeading:Locator;
+  readonly repertuarHeading: Locator;
+  //Second header naming row
+  readonly whatsOnLinkPl: Locator;
+  readonly offersLink: Locator;
+  readonly giftsLink: Locator;
+  readonly schoolsLink: Locator;
+  readonly familiesLink: Locator;
+  readonly barLink: Locator;
+  readonly unlimitedLink: Locator;
+  readonly fourDxLink: Locator;
+  readonly imaxLink: Locator;
+  readonly screenXLink: Locator;
+  readonly vipLink: Locator;
+  readonly eventCinemaLink: Locator;
 
   constructor(private readonly page: Page) {
     this.logOutButton = page.getByRole("link", { name: /Logout|Abmelden/i });
@@ -46,12 +59,34 @@ export class Header {
       .locator('[data-automation-id="locationpicker-modal-card-item"]')
       .filter({ hasText: "Wrocław - Korona" });
 
-    this.selectedCinemaLabel = page.locator("span").filter({
-      hasText: "Wrocław - Korona",
-    }).first();
+    this.selectedCinemaLabel = page
+      .locator("span")
+      .filter({
+        hasText: "Wrocław - Korona",
+      })
+      .first();
     this.repertuarHeading = page.getByRole("heading", {
-     name: "Repertuar Cinema City Wrocław",
-});
+      name: "Repertuar Cinema City Wrocław",
+    });
+    //Second header naming row
+    this.whatsOnLinkPl = page.getByRole("link", { name: "Repertuar" });
+
+    this.offersLink = page.getByRole("link", { name: /oferty/i });
+    this.giftsLink = page.getByRole("link", { name: /prezenty/i });
+
+    this.schoolsLink = page.getByRole("link", { name: /szkoły/i });
+    this.familiesLink = page.getByRole("link", { name: /rodziny/i });
+
+    this.barLink = page.getByRole("link", { name: /bar/i });
+
+    this.unlimitedLink = page.getByRole("link", { name: /unlimited/i });
+    this.fourDxLink = page.getByRole("link", { name: /4dx/i });
+
+    this.imaxLink = page.getByRole("link", { name: /imax/i });
+    this.screenXLink = page.getByRole("link", { name: /screenx/i });
+
+    this.vipLink = page.getByRole("link", { name: /vip/i });
+    this.eventCinemaLink = page.getByRole("link", { name: /event/i });
   }
 
   async switchToEnglish() {
