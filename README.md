@@ -43,6 +43,34 @@ For local development, a manually generated `storageState.json` can be placed in
 
 ---
 
+## Header Module
+
+### Page Object
+
+The header is encapsulated in a single component page object:
+
+| File | Responsibility |
+|---|---|
+| `pages/components/header.component.ts` | All header locators and reusable navigation actions |
+
+Key design decisions:
+- `getSelectedCinemaLabel(cinemaName: string)` is a method rather than a fixed locator, so it works for any cinema name selected in tests
+- Multi-step interactions (language switch, cinema selection, search) are wrapped in named methods, keeping tests readable
+- `data-automation-id` attributes used where available for selector stability
+
+### Test Coverage (`tests/smoke/header-navigation.spec.ts`)
+
+| Test | What it verifies |
+|---|---|
+| Language switch | Switching to English shows "What's On" link; switching back shows "Repertuar" |
+| Cinema search | Searching by name and clicking the result navigates to the correct repertoire page and URL |
+| Navigate to registration | Clicking the register button opens the registration page with the correct heading |
+| Navigate to login | Clicking the login button opens the login modal with the correct heading |
+| Select a cinema | Selecting a cinema from the picker shows the cinema name in the header |
+| Logo navigation | Clicking the Cinema City logo from any page returns to the homepage |
+
+---
+
 ## Tech Stack
 
 - [Playwright](https://playwright.dev/) — test runner and browser automation

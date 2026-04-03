@@ -1,62 +1,53 @@
 import test, { expect } from "@playwright/test";
-import { LoginPage } from "../../pages/login.page";
 import { Header } from "../../pages/components/header.component";
 
-test.describe("Header navigation tests", () => {
+test.describe("Header navigation", () => {
   test.describe.configure({ retries: 1 });
-  let loginPage: LoginPage;
   let header: Header;
 
-  test.beforeEach(async ({ page }, testInfo) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto("./");
     header = new Header(page);
-    loginPage = new LoginPage(page);
   });
 
-  test.afterEach(async ({ page }) => {
-    await page.close();
-  });
-
-  test("Change language to EN and back to PL", async ({ page }) => {
-    //Act
+  test("should switch language to English and back to Polish", async () => {
     await header.switchToEnglish();
     await expect(header.whatsOnLink).toBeVisible();
-    //Assert
+
     await header.switchToPolish();
     await expect(header.repertuarLink).toBeVisible();
   });
 
-  test("Check search", async ({ page }) => {
-    //Act
+  test("should search for a cinema and display results", async ({ page }) => {
     await header.searchCinema("Wrocław-Wroclavia");
     await header.searchResultHeading.click();
-    //Assert
+
     await expect(header.repertuarHeading).toBeVisible();
     await expect(page).toHaveURL(/buy-tickets-by-cinema.*in-cinema=1097/);
   });
 
-  test("Check registration page", async ({ page }) => {
-    //Act
+  test("should navigate to registration page from header", async ({ page }) => {
     await header.registerButton.click();
-    //Assert
-    await expect(
-      page.getByRole("heading", { name: "Utwórz konto My Cinema City" }),
-    ).toBeVisible();
+
+    await expect(page.getByRole("heading", { name: "Utwórz konto My Cinema City" })).toBeVisible();
   });
 
-  test("Check login page", async ({ page }) => {
-    //Act
+  test("should navigate to login page from header", async ({ page }) => {
     await header.logInButton.click();
-    //Assert
-    await expect(
-      page.getByRole("heading", { name: "Zaloguj się" }),
-    ).toBeVisible();
+
+    await expect(page.getByRole("heading", { name: "Zaloguj się" })).toBeVisible();
   });
 
-  test("Find the cinema", async ({ page }) => {
-    //Act
+  test("should allow user to select a cinema", async () => {
     await header.selectCinema("wrocław", "Wrocław - Korona");
-    //Assert
-    await expect(header.selectedCinemaLabel).toBeVisible();
+
+    await expect(header.getSelectedCinemaLabel("Wrocław - Korona")).toBeVisible();
+  });
+
+  test("should return to homepage when clicking Cinema City logo", async () => {
+    await header.logInButton.click();
+    await header.cinemaCityLabel.click();
+
+    await expect(header.searchInput).toBeVisible();
   });
 });
