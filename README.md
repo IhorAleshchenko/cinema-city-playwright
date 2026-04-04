@@ -71,6 +71,36 @@ Key design decisions:
 
 ---
 
+## What's On Module
+
+### Page Object & Helper
+
+| File | Responsibility |
+|---|---|
+| `pages/whats-on.page.ts` | All What's On locators, movie/showtime/date picker actions |
+| `helpers/dateHelper.ts` | Pure date math — no Playwright, builds Polish-language aria-labels |
+
+Key design decisions:
+- `dateHelper.ts` is kept separate from the page object — date logic has zero Playwright dependency and can be reasoned about in isolation
+- `findNextActiveDay()` dynamically skips disabled calendar days rather than relying on hardcoded dates, making tests stable across weeks
+- Disabled days are detected by checking `button count === 0` in the DOM, which is how Cinema City marks them (no `<button>` rendered at all)
+- Date picker methods are `private`/`public` split — internal locator logic is hidden from tests
+- Section comments (`// Movie methods`, `// Date picker methods`) group related logic within the single page object
+
+### Test Coverage (`tests/smoke/whats-on.spec.ts`)
+
+| Test | What it verifies |
+|---|---|
+| Open first movie | Clicking the first movie navigates to the correct film page and URL |
+| Open purchase window | Buy Ticket → showtime → modal shows login, register, and guest options |
+| Filter by Dolby Atmos | Selecting Dolby Atmos from the screening type dropdown applies the filter |
+| Navigate days sequentially | Clicking each enabled day in the strip advances the selected date forward |
+| Open movie from dropdown | Selecting a movie from the dropdown navigates to the correct film heading |
+| Display today in date picker | Opening the calendar popup shows today's date button |
+| Select next available day | Finds the first non-disabled day, clicks it, and verifies the date heading updates |
+
+---
+
 ## Tech Stack
 
 - [Playwright](https://playwright.dev/) — test runner and browser automation

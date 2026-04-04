@@ -1,85 +1,78 @@
 import test, { expect } from "@playwright/test";
-import { LoginPage } from "../../pages/login.page";
 import { Header } from "../../pages/components/header.component";
 import { WhatsOn } from "../../pages/whats-on.page";
 
 test.describe("Whats-on tests", () => {
   test.describe.configure({ retries: 1 });
-  let loginPage: LoginPage;
   let header: Header;
   let whatsOn: WhatsOn;
 
-  test.beforeEach(async ({ page }, testInfo) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto("./");
     header = new Header(page);
-    loginPage = new LoginPage(page);
     whatsOn = new WhatsOn(page);
     await header.selectCinema("wrocław", "Wrocław - Korona");
     await header.whatsOnLinkPl.click();
   });
 
-  test.afterEach(async ({ page }) => {
-    await page.close();
-  });
-
-  test("Open first movie from the list", async ({ page }) => {
+  test("should open first movie from the list", async ({ page }) => {
     const title = await whatsOn.openFirstMovie();
 
     await expect(page).toHaveURL(/buy-tickets-by-film/);
     await expect(whatsOn.getMovieHeading(title)).toBeVisible();
   });
 
-  // test("Open ", async ({ page }) => {
-  //   // await whatsOn.firstMovieTitle.toBe
-  //   await page.locator('.movie-row .movie-poster-container').first().click();
-  //   await expect(page.locator('.ytProgressBarLineProgressBarPlayed')).toBeVisible();
-  //   // await expect(page).toHaveURL(/buy-tickets-by-film/);
-  //   // await expect(whatsOn.getMovieHeading(title)).toBeVisible();
-  // });
+  test("should open purchase window", async () => {
+    await whatsOn.openFirstMovie();
+    await whatsOn.buyTicketButton.click();
+    await whatsOn.clickFirstShowtime();
 
-  // test("Open trailer", async ({ page }) => {
-  //   const title = await whatsOn.openFirstMovie();
-  //    await page.getByRole('link', { name: 'KUP BILET' }).click();
-  // await page.getByRole('link', { name: 'Kliknij aby przejśc do strony kina Wrocław - Korona' }).click();
-  // await page.getByRole('link', { name: ':30 - Wysoka dostępność miejsc' }).click();
-  // await page.getByRole('button', { name: 'Kup jako gość' }).click();
-  // await page.locator('g:nth-child(11) > .seat-hit-area').click();
-  // await expect (page.getByText('Błąd reCaptchy')).toBeVisible();
+    await expect(whatsOn.modalLoginButton).toBeEnabled();
+    await expect(whatsOn.modalRegisterButton).toBeEnabled();
+    await expect(whatsOn.guestCheckoutButton).toBeEnabled();
+  });
 
-  //   // await expect(page).toHaveURL(/buy-tickets-by-film/);
-  //   // await expect(whatsOn.getMovieHeading(title)).toBeVisible();
-  // });
-
-  test("Choose Dolby Atmos type", async ({ page }) => {
-    //Act
+  test("should filter screenings by Dolby Atmos", async () => {
     await whatsOn.screeningTypeDropdown.click();
     await whatsOn.dolbyAtmosOption.click();
-    //Assert
+
     await expect(whatsOn.dolbyAtmosLabel).toBeVisible();
   });
 
-  test("Check dates", async ({ page }) => {
+  test("should navigate through the next 6 days sequentially", async () => {
     let currentDate = await whatsOn.getSelectedDate();
 
     for (let i = 1; i < 7; i++) {
-      await whatsOn.getDayButton(i).click();
+      const button = whatsOn.getDayButton(i);
+      if (await button.isDisabled()) continue;
 
+      await button.click();
       const nextDate = await whatsOn.getSelectedDate();
 
-      const expectedDate = new Date(currentDate);
-      expectedDate.setDate(currentDate.getDate() + 1);
-
-      expect(nextDate.toDateString()).toBe(expectedDate.toDateString());
-
+      expect(nextDate.getTime()).toBeGreaterThan(currentDate.getTime());
       currentDate = nextDate;
     }
   });
 
-  test("Open movie from dropdown menu", async ({ page }) => {
-    //Act
+  test("should open movie from dropdown menu", async () => {
     await whatsOn.movieDropdown.click();
     const dropdownTitle = await whatsOn.openMovieFromDropdown();
-    //Assert
+
     await expect(whatsOn.getDropdownMovieHeading(dropdownTitle)).toBeVisible();
+  });
+
+  test("should display today in the date picker", async () => {
+    await whatsOn.openDatePicker();
+
+    await whatsOn.assertTodayIsVisible();
+  });
+
+  test("should select the next available day", async () => {
+    await whatsOn.openDatePicker();
+
+    const nextActiveDay = await whatsOn.findNextActiveDay(1);
+    await whatsOn.selectDay(nextActiveDay);
+
+    await whatsOn.assertDayIsSelected(nextActiveDay);
   });
 });
