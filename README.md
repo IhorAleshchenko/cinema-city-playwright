@@ -3,6 +3,51 @@
 As a movie fan, I chose [cinema-city.pl](https://www.cinema-city.pl/) as the subject of this test automation project. The goal was to simulate real user interactions with a familiar product while applying practical Playwright and TypeScript testing patterns.
 
 This project focuses on building a clean, maintainable UI test framework that reflects real-world QA practices.
+
+---
+
+## How to Run Tests
+
+```bash
+npm install
+npx playwright install
+npx playwright test
+```
+
+---
+
+## Project Structure
+
+```
+pages/           Page Objects (POM)
+tests/           Test suites (smoke, regression, auth)
+helpers/         Utility logic (e.g. date handling)
+test-data/       Test data
+global-setup.ts  Pre-test setup (cookies, storage state)
+```
+
+---
+
+## Testing Principles
+
+- Prefer stable selectors (`data-automation-id`) over CSS class names or XPath
+- Avoid hardcoded data — use dynamic dates and dynamic locators where possible
+- Separate UI logic from utility logic (helpers vs page objects)
+- Keep tests readable by encapsulating multi-step actions in page object methods
+- Handle external blockers (e.g. Cloudflare) gracefully and document the reason
+
+---
+
+## Known Limitations
+
+The target site uses Cloudflare Turnstile (anti-bot protection) on login and checkout flows. As a result:
+
+- Automated end-to-end login via the UI is not included — the suite covers login page UI validation instead
+- The `logIn()` method in `LoginPage` exists to demonstrate the pattern but is not called in tests
+- In a real project, authentication would be handled via an API login request in `global-setup.ts`, saving a `storageState` that all tests consume
+
+For local development, a manually generated `storageState.json` can be placed in the project root. It is excluded from version control.
+
 ---
 
 ## Login Module
@@ -17,7 +62,7 @@ The login flow is split across three dedicated page objects, each with a single 
 | `pages/reset-password.page.ts` | Forgot password page locators |
 | `pages/register.page.ts` | Registration form locators |
 
-All locators prefer `data-automation-id` attributes for stability. The `LoginPage` exposes a `logIn()` method representing the full reusable auth flow — see the note below on why it is not called in tests.
+All locators prefer `data-automation-id` attributes for stability.
 
 ### Test Coverage (`tests/auth/login-tests.spec.ts`)
 
@@ -33,21 +78,11 @@ All locators prefer `data-automation-id` attributes for stability. The `LoginPag
 | Terms checkbox | Checkbox can be checked and unchecked, state is verified via DOM property |
 | Marketing consent checkbox | Same pattern as terms checkbox |
 
-### Authentication Note
-
-The real login flow is protected by Cloudflare Turnstile (anti-bot). Automated end-to-end login via the UI was intentionally excluded to keep the suite stable.
-
-In a real project, authentication would be handled via an API login request in `global-setup.ts`, saving a `storageState` that all tests consume — bypassing the UI and CAPTCHA entirely. The `logIn()` method in `LoginPage` demonstrates this pattern.
-
-For local development, a manually generated `storageState.json` can be placed in the project root (it is excluded from version control).
-
 ---
 
 ## Header Module
 
 ### Page Object
-
-The header is encapsulated in a single component page object:
 
 | File | Responsibility |
 |---|---|
@@ -85,7 +120,6 @@ Key design decisions:
 - `findNextActiveDay()` dynamically skips disabled calendar days rather than relying on hardcoded dates, making tests stable across weeks
 - Disabled days are detected by checking `button count === 0` in the DOM, which is how Cinema City marks them (no `<button>` rendered at all)
 - Date picker methods are `private`/`public` split — internal locator logic is hidden from tests
-- Section comments (`// Movie methods`, `// Date picker methods`) group related logic within the single page object
 
 ### Test Coverage (`tests/smoke/whats-on.spec.ts`)
 
