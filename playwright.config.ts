@@ -2,9 +2,9 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
-  timeout: 40000,
+  timeout: process.env.CI ? 60000 : 30000,
   expect: {
-    timeout: 5000,
+    timeout: 8000,
   },
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -23,7 +23,8 @@ export default defineConfig({
     baseURL: "https://www.cinema-city.pl/",
     storageState: "storageState.json",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "retain-on-failure",
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
   },
 
   /* Configure projects for major browsers */
