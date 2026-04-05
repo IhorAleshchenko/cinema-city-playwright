@@ -4,7 +4,7 @@ import { ResetPasswordPage } from "../../pages/reset-password.page";
 import { RegisterPage } from "../../pages/register.page";
 import { Header } from "../../pages/components/header.component";
 
-test.describe("Login Tests", () => {
+test.describe("@auth Login Tests", () => {
   test.describe.configure({ retries: 1 });
 
   let loginPage: LoginPage;

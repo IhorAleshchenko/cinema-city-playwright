@@ -1,7 +1,7 @@
 import test, { expect } from "@playwright/test";
 import { Header } from "../../pages/components/header.component";
 
-test.describe("Header navigation", () => {
+test.describe("@smoke @header Header navigation", () => {
   test.describe.configure({ retries: 1 });
   let header: Header;
 

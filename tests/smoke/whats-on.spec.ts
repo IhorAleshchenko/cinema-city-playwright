@@ -2,7 +2,7 @@ import test, { expect } from "@playwright/test";
 import { Header } from "../../pages/components/header.component";
 import { WhatsOn } from "../../pages/whats-on.page";
 
-test.describe("Whats-on tests", () => {
+test.describe("@smoke @whats-on What's On", () => {
   test.describe.configure({ retries: 1 });
   let header: Header;
   let whatsOn: WhatsOn;
