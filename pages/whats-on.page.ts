@@ -34,7 +34,7 @@ export class WhatsOn {
 
     this.screeningTypeDropdown = page.getByRole("button", { name: "Wybierz rodzaj seansu" });
     this.dolbyAtmosOption = page.locator("a").filter({ hasText: "Dolby Atmos" });
-    this.dolbyAtmosLabel = page.getByLabel("Screening type: Dolby Atmos");
+    this.dolbyAtmosLabel = page.getByLabel("Screening type: Dolby Atmos").first();
 
     this.selectedDateHeading = page.getByRole("heading", { level: 5 });
     this.buyTicketButton = page.getByRole("link", { name: /KUP BILET/i });
