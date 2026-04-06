@@ -135,6 +135,36 @@ Key design decisions:
 
 ---
 
+## Main Page Module
+
+### Page Object
+
+| File | Responsibility |
+|---|---|
+| `pages/main.page.ts` | Hero slider, section headings, blog, and all promotional tab cards |
+
+Key design decisions:
+- Each promotional tab panel is scoped to its own `#tab_promoTabN` container — card locators use regex against `aria-label` within the panel, preventing false matches from identically named links elsewhere on the page (e.g. multiple "VIP" links across tabs)
+- Each panel renders links twice in the DOM (desktop layout + mobile carousel). `.first()` is applied to all card locators to consistently target the desktop version
+- `data-qa` attributes are used for section headings where available, falling back to `aria-label` regex for tab card links
+
+### Test Coverage (`tests/smoke/main-page.spec.ts`)
+
+| Test | What it verifies |
+|---|---|
+| Display hero slider | Slider container and active slide are visible on page load |
+| Active slide navigation | Clicking the active slide navigates to its linked URL |
+| Display all section headings | Now Playing, Coming Soon, Watch in Format, Family Friendly, and Events headings are all visible |
+| Buy ticket flow | Clicking Buy Ticket → searching a cinema → navigating to the repertoire page |
+| Blog navigation | Blog heading is visible and the "all articles" link navigates to the blog URL |
+| Display format cards | Formats tab shows VIP, SCREENX, Comfort Seat, and Laser Projection cards |
+| Display recommended cards | Recommended tab shows Unlimited, Spin City, Game Zone, and My Cinema City cards |
+| Display bar cards | Bar tab shows VIP snacks, Concession Offer, Movie Merch, and Popcorn cards |
+| Display firm cards | Companies tab shows VIP, Spin City, and Unlimited for Business cards |
+| Display school cards | Schools tab shows all four educational offer cards |
+
+---
+
 ## Tech Stack
 
 - [Playwright](https://playwright.dev/) — test runner and browser automation
