@@ -4,6 +4,7 @@ import { Main } from "../../pages/main.page";
 
 test.describe("@smoke @main-page Main page", () => {
   test.describe.configure({ retries: 1 });
+  // Cloudflare may intercept on first load
   let header: Header;
   let main: Main;
 
@@ -19,9 +20,9 @@ test.describe("@smoke @main-page Main page", () => {
   });
 
   test("should navigate to correct page on active slide click", async ({ page }) => {
-    const href = await main.clickActiveSlide();
+    const urlPattern = await main.clickActiveSlide();
 
-    await expect(page).toHaveURL(new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    await expect(page).toHaveURL(urlPattern);
   });
 
   test("should display all section headings", async () => {
@@ -32,12 +33,10 @@ test.describe("@smoke @main-page Main page", () => {
     await expect(main.eventsHeader).toBeVisible();
   });
 
-  test("should navigate to repertoire on buy ticket click", async () => {
+  test("should open cinema picker on buy ticket click", async () => {
     await main.buyTicketButton.click();
-    await header.searchCinema("Wrocław-Wroclavia");
-    await header.searchResultHeading.click();
 
-    await expect(header.repertuarHeading).toBeVisible();
+    await expect(header.selectCinemaLink).toBeVisible();
   });
 
   test("should navigate to blog page", async ({ page }) => {

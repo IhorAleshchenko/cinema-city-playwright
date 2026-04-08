@@ -6,6 +6,7 @@ import { Header } from "../../pages/components/header.component";
 
 test.describe("@auth Login Tests", () => {
   test.describe.configure({ retries: 1 });
+  // Cloudflare may intercept on first load
 
   let loginPage: LoginPage;
   let resetPasswordPage: ResetPasswordPage;
