@@ -155,13 +155,41 @@ Key design decisions:
 | Display hero slider | Slider container and active slide are visible on page load |
 | Active slide navigation | Clicking the active slide navigates to its linked URL |
 | Display all section headings | Now Playing, Coming Soon, Watch in Format, Family Friendly, and Events headings are all visible |
-| Buy ticket flow | Clicking Buy Ticket → searching a cinema → navigating to the repertoire page |
+| Buy ticket flow | Clicking Buy Ticket opens the cinema picker modal |
 | Blog navigation | Blog heading is visible and the "all articles" link navigates to the blog URL |
 | Display format cards | Formats tab shows VIP, SCREENX, Comfort Seat, and Laser Projection cards |
 | Display recommended cards | Recommended tab shows Unlimited, Spin City, Game Zone, and My Cinema City cards |
 | Display bar cards | Bar tab shows VIP snacks, Concession Offer, Movie Merch, and Popcorn cards |
 | Display firm cards | Companies tab shows VIP, Spin City, and Unlimited for Business cards |
 | Display school cards | Schools tab shows all four educational offer cards |
+
+---
+
+## Footer Module
+
+### Page Object
+
+| File | Responsibility |
+|---|---|
+| `pages/components/footer.component.ts` | All footer locators and the reusable `assertLinksHref` method |
+
+Key design decisions:
+- Each footer section is scoped by its `h4` heading using `has: page.locator('h4', { hasText: /^OFERTY$/ })` — exact regex match prevents the "OFERTY" section accidentally matching "OFERTY B2B"
+- `assertLinksHref(links)` is a shared POM method that asserts both visibility and correct `href` for a list of links in a single pass — keeps tests DRY and assertions complete
+- Footer links use `href` assertion rather than full navigation: the most common real-world failure is a wrong `href` set in the CMS, not a broken server response. This avoids Cloudflare exposure and keeps the suite fast
+- Social and app links (`javascript:` hrefs, external domains) are handled with pattern-matched regex rather than exact URLs, making assertions resilient to minor URL changes
+
+### Test Coverage (`tests/smoke/footer-navigation.spec.ts`)
+
+| Test | What it verifies |
+|---|---|
+| Display all footer headings | All six section containers (O NAS, OFERTY, OFERTY B2B, INFORMACJE, LINKI, OBSERWUJ NAS) are visible |
+| About us links hrefs | Each O NAS link is visible and points to the correct internal path |
+| Offers links hrefs | Each OFERTY link is visible and points to the correct internal path |
+| B2B offers links hrefs | Each OFERTY B2B link is visible and points to the correct internal path |
+| Information links hrefs | INFORMACJE links verified — including the `javascript:OneTrust` cookies handler and absolute URL for tax strategy |
+| External links hrefs | LINKI section links point to the correct external domains |
+| Social media and app hrefs | Social links match expected platforms; app links match Google Play and Apple App Store |
 
 ---
 
