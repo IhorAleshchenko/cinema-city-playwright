@@ -1,77 +1,71 @@
 import test, { expect } from "@playwright/test";
-import { Header } from "../../pages/components/header.component";
 import { Footer } from "../../pages/components/footer.component";
 
 test.describe("@smoke @footer What's On", () => {
   test.describe.configure({ retries: 1 });
-  let header: Header;
+  // Cloudflare may block on first attempt or similar
   let footer: Footer;
-
   test.beforeEach(async ({ page }) => {
     await page.goto("./");
-    header = new Header(page);
     footer = new Footer(page);
-    // await header.selectCinema("wrocław", "Wrocław - Korona");
-    // await header.whatsOnLinkPl.click();
   });
 
-  test("should display all about us section headings", async () => {
+  test("should display all footer headings", async () => {
     await expect(footer.aboutSection).toBeVisible();
-    await expect(footer.cinemaCityLink).toBeVisible();
-    await expect(footer.newsLink).toBeVisible();
-    await expect(footer.jobsLink).toBeVisible();
-    await expect(footer.newsletterLink).toBeVisible();
-    await expect(footer.contactLink).toBeVisible();
-  });
-
-   test("should open all about us links section headings", async ({page}) => {
-    await expect(footer.aboutSection).toBeVisible();
-    await footer.cinemaCityLink.click();
-    await expect(page).toHaveURL(/o-nas/);
-    await header.cinemaCityLabel.click();
-    await footer.newsLink.click();
-    await expect(page).toHaveURL(/blog/);
-    await header.cinemaCityLabel.click();
-    await footer.jobsLink.click();
-    await expect(page).toHaveURL(/oferty-pracy/);
-    await header.cinemaCityLabel.click();
-    await expect(footer.newsletterLink).toBeVisible();
-    await footer.contactLink.click();
-    await expect(page).toHaveURL(/support/);
-  });
-
-  test("should display offers section headings", async () => {
     await expect(footer.offersSection).toBeVisible();
-    await expect(footer.unlimitedLink).toBeVisible();
-    await expect(footer.weddingLink).toBeVisible();
-    await expect(footer.birthdayLink).toBeVisible();
-  });
-  test("should display offers b2b section headings", async () => {
     await expect(footer.offersB2BSection).toBeVisible();
-    await expect(footer.vouchersLink).toBeVisible();
-    await expect(footer.rentHallLink).toBeVisible();
-    await expect(footer.vipZoneLink).toBeVisible();
-  });
- test("should display information section headings", async () => {
     await expect(footer.infoSection).toBeVisible();
-    await expect(footer.regulationsLink).toBeVisible();
-    await expect(footer.privacyPolicyLink).toBeVisible();
-    await expect(footer.manageCookiesLink).toBeVisible();
-    await expect(footer.cookiesPolicyLink).toBeVisible();
-    await expect(footer.taxStrategyLink).toBeVisible();
-  });
-  test("should display link section headings", async () => {
     await expect(footer.linksSection).toBeVisible();
-    await expect(footer.forumFilmLink).toBeVisible();
-    await expect(footer.cinemaAdsLink).toBeVisible();
-  })
-  test("should display social media section headings", async () => {
     await expect(footer.socialAndAppColumn).toBeVisible();
-    await expect(footer.facebookLink).toBeVisible();
-    await expect(footer.instagramLink).toBeVisible();
-    await expect(footer.youtubeLink).toBeVisible();
-    await expect(footer.linkedInLink).toBeVisible();
-    await expect(footer.androidLink).toBeVisible();
-    await expect(footer.iosLink).toBeVisible();
-  })
+  });
+  test("should have correct hrefs for about us links", async () => {
+    await footer.assertLinksHref([
+      { locator: footer.cinemaCityLink,  expectedHref: /\/o-nas/ },
+      { locator: footer.newsLink,        expectedHref: /\/blog/ },
+      { locator: footer.jobsLink,        expectedHref: /\/oferty-pracy/ },
+      { locator: footer.newsletterLink,  expectedHref: /newsletter\.cinema-city\.pl/ },
+      { locator: footer.contactLink,     expectedHref: /\/kontakt/ },
+    ]);
+  });
+  test("should have correct hrefs for offers links", async () => {
+    await footer.assertLinksHref([
+      { locator: footer.unlimitedLink,        expectedHref: /\/unlimited/ },
+      { locator: footer.weddingLink,        expectedHref: /\/slub-i-zareczyny/ },
+      { locator: footer.birthdayLink,     expectedHref: /\/urodziny/ },
+    ]);
+  });
+   test("should have correct hrefs for b2b offers links", async () => {
+    await footer.assertLinksHref([
+      { locator: footer.vouchersLink,        expectedHref: /\/vouchery-dla-firm/ },
+      { locator: footer.rentHallLink,        expectedHref: /\/wynajem-sal-eventy/ },
+      { locator: footer.vipZoneLink,     expectedHref: /\/strefa-vip-dla-firm/ },
+    ]);
+  });
+   test("should have correct hrefs for information links", async () => {
+    await footer.assertLinksHref([
+      { locator: footer.regulationsLink,        expectedHref: /\/regulacje-footer/ },
+      { locator: footer.privacyPolicyLink,        expectedHref: /\/privacy-policy-pl/ },
+      { locator: footer.manageCookiesLink,     expectedHref: /OneTrust/ },
+      { locator: footer.cookiesPolicyLink,     expectedHref: /\/cookies/ },
+      { locator: footer.taxStrategyLink,       expectedHref: /strategia-podatkowa/ },
+    ]);
+  });
+  test("should have correct hrefs for link section", async () => {
+    await footer.assertLinksHref([
+      { locator: footer.forumFilmLink, expectedHref: /forumfilm/ },
+      { locator: footer.cinemaAdsLink, expectedHref: /newagemedia/ },
+    ]);
+  });
+
+  test("should have correct hrefs for social media section", async () => {
+    await footer.assertLinksHref([
+      { locator: footer.facebookLink,        expectedHref: /facebook/ },
+      { locator: footer.instagramLink,        expectedHref: /instagram/ },
+      { locator: footer.youtubeLink,        expectedHref: /youtube/ },
+      { locator: footer.linkedInLink,        expectedHref: /linkedin/ },
+      { locator: footer.androidLink,        expectedHref: /store/ },
+      { locator: footer.iosLink,        expectedHref: /apple/ },
+    ]);
+  });
+
 });
