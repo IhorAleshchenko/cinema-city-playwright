@@ -136,6 +136,8 @@ export class WhatsOn {
 
   async assertTodayIsVisible(): Promise<void> {
     const today = getDateInfo(0);
-    await expect(this.getDayButtonByAriaLabel(today.ariaLabel)).toBeVisible();
+    // Today may be disabled (no <button> rendered) — locate the cell by day number instead
+    const todayCell = this.datepicker.locator(`td`).filter({ hasText: String(today.day) }).first();
+    await expect(todayCell).toBeVisible();
   }
 }

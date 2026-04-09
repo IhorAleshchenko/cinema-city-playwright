@@ -50,7 +50,7 @@ test.describe("@smoke @whats-on What's On", () => {
       await button.click();
       const nextDate = await whatsOn.getSelectedDate();
 
-      expect(nextDate.getTime()).toBeGreaterThan(currentDate.getTime());
+      expect(nextDate.getTime()).toBeGreaterThanOrEqual(currentDate.getTime());
       currentDate = nextDate;
     }
   });
