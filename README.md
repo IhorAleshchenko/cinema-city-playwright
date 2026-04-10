@@ -193,6 +193,41 @@ Key design decisions:
 
 ---
 
+## Error Listener Fixture
+
+### What it does
+
+All smoke tests use a custom Playwright fixture (`fixtures/errorListener.fixture.ts`) that monitors HTTP responses during every test run. After each test completes, it checks whether Cinema City's own servers returned any serious errors.
+
+Functional tests verify UI behavior — buttons, navigation, modals. But a page can look correct visually while a server-side failure happens silently underneath. The fixture catches that second layer automatically, without extra assertions in each test.
+
+**Real example:**
+The "should open purchase window" test passes — the modal opens and buttons are visible. But if the seat availability API returns 500 behind the scenes, the fixture fails the test with `[500] https://www.cinema-city.pl/api/seats`.
+
+### What it catches
+
+| Status | Condition | Example |
+|---|---|---|
+| 5xx | Any server error on cinema-city.pl | Broken API, server crash |
+| 404 | Missing internal resource (non-static) | Broken page, missing endpoint |
+
+### What it ignores
+
+- All third-party domains — analytics, ads, CDNs (not our responsibility)
+- `/static/` 404s — expected for optional assets like images
+
+### Console output
+
+After each test, one of these is logged:
+- `✓ [test name] No HTTP errors detected on cinema-city.pl` — clean run
+- Test fails with the list of affected URLs — server-side issue found
+
+### Scope
+
+Currently applied to smoke tests only. Once baseline noise is understood, can be extended to regression and auth suites by updating the import in those spec files.
+
+---
+
 ## Tech Stack
 
 - [Playwright](https://playwright.dev/) — test runner and browser automation
