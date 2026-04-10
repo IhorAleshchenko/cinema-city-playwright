@@ -1,4 +1,4 @@
-import test, { expect } from "@playwright/test";
+import { test, expect } from "../../fixtures/errorListener.fixture";
 import { Footer } from "../../pages/components/footer.component";
 
 test.describe("@smoke @footer What's On", () => {

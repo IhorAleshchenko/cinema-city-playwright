@@ -1,4 +1,4 @@
-import test, { expect } from "@playwright/test";
+import { test, expect } from "../../fixtures/errorListener.fixture";
 import { LoginPage } from "../../pages/login.page";
 import { ResetPasswordPage } from "../../pages/reset-password.page";
 import { RegisterPage } from "../../pages/register.page";
