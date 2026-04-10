@@ -103,10 +103,10 @@ export class Main {
     return this.slider.locator(".slick-slide.slick-current.slick-active");
   }
 
-  async clickActiveSlide(): Promise<string> {
+  async clickActiveSlide(): Promise<RegExp> {
     const active = this.getActiveSlide();
-    const href = await active.getAttribute("href");
+    const href = await active.getAttribute("href") ?? "";
     await active.click();
-    return href ?? "";
+    return new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
   }
 }
