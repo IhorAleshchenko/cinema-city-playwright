@@ -20,7 +20,12 @@ npx playwright test
 
 ```
 pages/           Page Objects (POM)
-tests/           Test suites (smoke, regression, auth)
+tests/
+  smoke/         UI smoke tests — critical paths and navigation
+  regression/    Regression tests — detailed feature coverage
+  auth/          Authentication tests — login, register, validation
+  api/           API tests — HTTP-level page availability checks
+fixtures/        Custom Playwright fixtures (e.g. error listener)
 helpers/         Utility logic (e.g. date handling)
 test-data/       Test data
 global-setup.ts  Pre-test setup (cookies, storage state)
