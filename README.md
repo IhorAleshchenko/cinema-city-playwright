@@ -228,6 +228,51 @@ Currently applied to smoke tests only. Once baseline noise is understood, can be
 
 ---
 
+## API Tests
+
+### What they check
+
+`tests/api/pages.spec.ts` verifies that Cinema City's key pages are reachable at the HTTP level — before any browser rendering happens. These tests use Playwright's built-in `request` fixture with no browser, no POM, and no fixtures required.
+
+This is a separate layer from UI smoke tests:
+
+| Layer | Checks | Speed |
+|---|---|---|
+| API test | Server responds, page exists, status 200 | Fast — no browser |
+| UI smoke test | Page renders correctly, elements visible | Slower |
+
+### Why not test everything at the UI level?
+
+A UI test for `/blog` opens a browser, loads all assets, renders the page, and then asserts. An API test just asks: *does the server respond with 200?* It catches broken or removed pages faster and without Cloudflare exposure.
+
+The `errorListener` fixture already catches 500s during UI test runs. API tests fill the remaining gap: **verifying a page exists at all**, before the browser tries to render it.
+
+### Pages tested (`tests/api/pages.spec.ts`)
+
+| Page | Path |
+|---|---|
+| Homepage | `/` |
+| Blog | `/blog` |
+| About us | `/o-nas` |
+| Jobs | `/oferty-pracy` |
+| Contact | `/kontakt` |
+| Unlimited | `/unlimited` |
+| Privacy policy | `/privacy-policy-pl` |
+| Cookies policy | `/cookies` |
+| Regulations | `/regulacje-footer` |
+| Wedding offer | `/oferty/slub-i-zareczyny` |
+| Birthday offer | `/oferty/urodziny` |
+| Vouchers for firms | `/oferty/vouchery-dla-firm` |
+| Hall rental | `/wynajem-sal-eventy` |
+
+### How to run
+
+```bash
+npx playwright test tests/api
+```
+
+---
+
 ## Tech Stack
 
 - [Playwright](https://playwright.dev/) — test runner and browser automation
