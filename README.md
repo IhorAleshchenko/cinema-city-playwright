@@ -170,6 +170,36 @@ Key design decisions:
 
 ---
 
+## IMAX Module
+
+### Page Object
+
+| File | Responsibility |
+|---|---|
+| `pages/imax.page.ts` | All IMAX page locators, dynamic schedule heading method, and `assertLinksHref` |
+
+Key design decisions:
+- Cinema location links (Sadyba, Wroclavia, etc.) use `getByRole('link')` with regex — semantic and readable
+- Cinema selector buttons all share `data-automation-id="chooseExperienceCinemaButton"` — disambiguated with `hasText` regex per city, avoiding fragile index-based selectors
+- `getScheduleHeading(cinemaName)` is a dynamic method rather than 6 static locators — one method covers any cinema, keeping the POM lean
+- `assertLinksHref` checks both visibility and `href` in a single pass — same pattern as Footer, keeps tests DRY
+- Tab state is asserted via `aria-selected` attribute — reflects actual accessible state, not just visual appearance
+
+### Test Coverage (`tests/regression/imax.spec.ts`)
+
+| Test | What it verifies |
+|---|---|
+| Open IMAX page | Navigating via header lands on `/imax` URL with the main tab visible |
+| Display IMAX section heading | Main `h4` heading is visible |
+| Correct hrefs for cinema locations | Each cinema link is visible and points to the correct `/kina/` path |
+| Switch between tabs | Clicking tabs updates `aria-selected` on both active and inactive tab |
+| Display Experience content headings | "More About IMAX" tab shows the two content headings |
+| Display video slider | "Get to Know" tab shows the video slider and an active thumbnail |
+| Load schedule after selecting a cinema | Clicking Katowice button loads the `h2` heading with the cinema name |
+| Display all IMAX cinemas in Poland | Section heading and all 6 city buttons are visible |
+
+---
+
 ## Footer Module
 
 ### Page Object
