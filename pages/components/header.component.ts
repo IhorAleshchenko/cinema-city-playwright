@@ -15,6 +15,7 @@ export class Header {
   readonly repertuarHeading: Locator;
   readonly cinemaCityLabel: Locator;
   //Second header naming row
+  readonly navBar: Locator;
   readonly whatsOnLinkPl: Locator;
   readonly offersLink: Locator;
   readonly imaxLink: Locator;
@@ -36,11 +37,12 @@ export class Header {
     this.repertuarHeading = page.getByRole("heading", {name: "Repertuar Cinema City Wrocław", });
     this.cinemaCityLabel = page.locator('[data-automation-id="header-logo-link"]');
     //Second header naming row
-    this.whatsOnLinkPl = page.locator('#menu-item-whatson');
-    this.offersLink = page.getByRole("link", { name: /oferty/i });
-    this.imaxLink = page.getByRole("link", { name: /imax/i });
-    this.eventCinemaLink = page.getByRole("link", { name: /event/i });
-     this.unlimitedCard = page.locator('a[data-automation-id="menu-item-without-image"][href="/unlimited"]')
+    this.navBar = page.getByRole('navigation');
+    this.whatsOnLinkPl = this.navBar.locator('a[data-link-type="whatson"]');
+    this.offersLink = this.navBar.locator('a[href="/oferty"]');
+    this.imaxLink = this.navBar.locator('a[href="/imax"]');
+    this.eventCinemaLink = this.navBar.locator('a[href="/event-cinema"]');
+    this.unlimitedCard = this.navBar.locator('a[href="/unlimited"]');
   }
 
   async switchToEnglish() {
