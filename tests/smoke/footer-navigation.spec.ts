@@ -2,8 +2,6 @@ import { test, expect } from "../../fixtures/errorListener.fixture";
 import { Footer } from "../../pages/components/footer.component";
 
 test.describe("@smoke @footer What's On", () => {
-  test.describe.configure({ retries: 1 });
-  // Cloudflare may block on first attempt or similar
   let footer: Footer;
   test.beforeEach(async ({ page }) => {
     await page.goto("./");

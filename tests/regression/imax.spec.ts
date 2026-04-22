@@ -3,8 +3,6 @@ import { Header } from "../../pages/components/header.component";
 import { ImaxPage } from "../../pages/imax.page";
 
 test.describe("@regression @imax Imax", () => {
-  test.describe.configure({ retries: 1 });
-  // Cloudflare may intercept on first load
   let header: Header;
   let imax: ImaxPage;
 

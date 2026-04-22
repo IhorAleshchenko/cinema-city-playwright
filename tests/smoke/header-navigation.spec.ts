@@ -2,8 +2,6 @@ import { test, expect } from "../../fixtures/errorListener.fixture";
 import { Header } from "../../pages/components/header.component";
 
 test.describe("@smoke @header Header navigation", () => {
-  test.describe.configure({ retries: 1 });
-  // Cloudflare may intercept on first load
   let header: Header;
 
   test.beforeEach(async ({ page }) => {
@@ -11,7 +9,7 @@ test.describe("@smoke @header Header navigation", () => {
     header = new Header(page);
   });
 
-  test("should switch language to English and back to Polish", async () => {
+  test("should switch language to English and back to Polish", async (): Promise < void > => {
     await header.switchToEnglish();
     await expect(header.whatsOnLink).toBeVisible();
 

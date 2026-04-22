@@ -3,8 +3,6 @@ import { Header } from "../../pages/components/header.component";
 import { WhatsOn } from "../../pages/whats-on.page";
 
 test.describe("@smoke @whats-on What's On", () => {
-  test.describe.configure({ retries: 1 });
-  // Cloudflare may intercept on first load
   let header: Header;
   let whatsOn: WhatsOn;
 

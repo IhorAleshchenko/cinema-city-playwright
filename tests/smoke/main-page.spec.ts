@@ -3,8 +3,6 @@ import { Header } from "../../pages/components/header.component";
 import { Main } from "../../pages/main.page";
 
 test.describe("@smoke @main-page Main page", () => {
-  test.describe.configure({ retries: 1 });
-  // Cloudflare may intercept on first load
   let header: Header;
   let main: Main;
 
