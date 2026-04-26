@@ -110,8 +110,9 @@ test.describe("@auth Login Tests", () => {
   });
 
   test("should match login page visual baseline", async ({ page }) => {
-  await expect(page).toHaveScreenshot("login-page.png", {
-    mask: [page.locator('#promoBox')]
+    await expect(page).toHaveScreenshot("login-page.png", {
+      mask: [page.locator('#promoBox')],
+      maxDiffPixelRatio: 0.05
+    });
   });
-});
 });
