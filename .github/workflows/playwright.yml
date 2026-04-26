@@ -13,7 +13,31 @@ on:
         default: '@smoke'
 
 jobs:
+  update-snapshots:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.grep == 'update-snapshots'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      - name: Update visual snapshots
+        run: npx playwright test tests/auth/login-tests.spec.ts --update-snapshots
+      - name: Commit snapshots
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add tests/auth/login-tests.spec.ts-snapshots/
+          git diff --cached --quiet || git commit -m "Update Linux visual snapshots"
+          git push
+
   test:
+    if: github.event.inputs.grep != 'update-snapshots'
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
@@ -34,17 +58,6 @@ jobs:
       - name: Set grep value
         run: echo "GREP=${{ github.event.inputs.grep || '@smoke' }}" >> $GITHUB_ENV
 
-      - name: Update visual snapshots
-        run: npx playwright test tests/auth/login-tests.spec.ts --update-snapshots
-
-      - name: Commit updated snapshots
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add tests/auth/login-tests.spec.ts-snapshots/
-          git diff --cached --quiet || git commit -m "Update visual snapshots for linux"
-          git push
-
       - name: Run Playwright tests
         run: npx playwright test --grep "$GREP"
 
@@ -55,11 +68,11 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-          
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-         name: test-results
-         path: test-results/
-         retention-days: 30
+          name: test-results
+          path: test-results/
+          retention-days: 30
