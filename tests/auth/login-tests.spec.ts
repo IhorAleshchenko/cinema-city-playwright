@@ -108,4 +108,10 @@ test.describe("@auth Login Tests", () => {
     await registerPage.marketingCheckbox.uncheck();
     await expect(registerPage.marketingCheckbox).not.toBeChecked();
   });
+
+  test("should match login page visual baseline", async ({ page }) => {
+  await expect(page).toHaveScreenshot("login-page.png", {
+    mask: [page.locator('#promoBox')]
+  });
+});
 });

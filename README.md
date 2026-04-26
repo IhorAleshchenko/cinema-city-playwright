@@ -82,6 +82,12 @@ All locators prefer `data-automation-id` attributes for stability.
 | Registration validation errors | Invalid email, weak password, and empty required fields all produce the correct error messages |
 | Terms checkbox | Checkbox can be checked and unchecked, state is verified via DOM property |
 | Marketing consent checkbox | Same pattern as terms checkbox |
+| Login page visual baseline | Screenshot of the login form compared against a stored baseline — `#promoBox` section masked to avoid dynamic content failures |
+
+To generate or update the visual baseline:
+```bash
+npx playwright test tests/auth/login-tests.spec.ts --update-snapshots
+```
 
 ---
 
