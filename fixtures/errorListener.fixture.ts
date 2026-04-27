@@ -1,11 +1,13 @@
 import { test as base, Response } from "@playwright/test";
 
 const CINEMA_CITY_DOMAIN = "cinema-city.pl";
+//Check only our domain as we are nor responsible for external one.
 
 export const test = base.extend<{ page: typeof base.prototype["page"] }>({
   page: async ({ page }, use, testInfo) => {
+// Extend standard test to base
     const errors: string[] = [];
-
+// Here we will store errors
     page.on("response", (response: Response) => {
       const url = response.url();
       const status = response.status();
