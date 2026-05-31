@@ -29,6 +29,20 @@ export class Offers {
   readonly polishLanguageLink: Locator;
   readonly submitButton: Locator;
 
+  readonly forYouAndLovedOnesHeading: Locator;
+
+  readonly offersSection: Locator;
+  readonly unlimitedLink: Locator;
+  readonly familyOfferLink: Locator;
+  readonly weddingLink: Locator;
+  readonly birthdayLink: Locator;
+  readonly sensoryCinemaLink: Locator;
+  readonly spinCityLink: Locator;
+  readonly pixelCityLink: Locator;
+  readonly gamingLink: Locator;
+  readonly partnerOffersLink: Locator;
+  
+
   constructor(page: Page) {
     this.offersHeading = page.getByRole("heading", { name: "OFERTY", level: 1 });
     this.checkVoucher = page.getByRole("button", { name: "SPRAWDŹ" });
@@ -57,6 +71,19 @@ export class Offers {
     this.languageDropdownButton = page.getByRole("button", { name: "English" });
     this.polishLanguageLink = page.getByRole("link", { name: "Polski" });
     this.submitButton = page.getByRole("button", { name: "Prześlij" });
+
+    this.forYouAndLovedOnesHeading = page.getByRole("heading", {name: "DLA CIEBIE I TWOICH BLISKICH",level: 3,});
+
+    this.offersSection = page.locator('div.row.mb-md', {has: page.locator('h3', { hasText: /^DLA CIEBIE I TWOICH BLISKICH$/ })}).first();
+    this.unlimitedLink = this.offersSection.getByRole('link', { name: /unlimited/i });
+    this.familyOfferLink = this.offersSection.getByRole('link', { name: /oferta rodzinna/i });
+    this.weddingLink = this.offersSection.getByRole('link', { name: /ślub i zaręczyny/i });
+    this.birthdayLink = this.offersSection.getByRole('link', { name: /urodziny w kinie/i });
+    this.sensoryCinemaLink = this.offersSection.getByRole('link', { name: /pokaz przyjazne sensorycznie/i });
+    this.spinCityLink = this.offersSection.getByRole('link', { name: /spin city/i });
+    this.pixelCityLink = this.offersSection.getByRole('link', { name: /pixel city/i });
+    this.gamingLink = this.offersSection.getByRole('link', { name: /gaming w kinie/i });
+    this.partnerOffersLink = this.offersSection.getByRole('link', { name: /oferty partnerów/i });
   }
 
   async openVoucherCategories() {
@@ -105,6 +132,14 @@ export class Offers {
 
     for (const field of requiredFields) {
       await expect(field.getByText("To pole jest obowiązkowe")).toBeVisible();
+    }
+  }
+
+    async assertLinksHref(links: { locator: Locator; expectedHref: string | RegExp }[]) {
+    for (const { locator, expectedHref } of links) {
+      await expect(locator).toBeVisible();
+      const href = await locator.getAttribute('href');
+      expect(href).toMatch(expectedHref);
     }
   }
 }

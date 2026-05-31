@@ -13,14 +13,14 @@ test.describe("@regression @offers Offers", () => {
     await header.offersLink.click();
   });
 
-  test("Should open Voucher link", async () => {
+  test("should open Voucher link", async () => {
     await offers.checkVoucher.click();
     await offers.orderVouchersButton.click();
 
     await expect(offers.categoryHeading).toBeVisible();
   });
 
-  test("Should fill up Voucher form", async () => {
+  test("should fill up Voucher form", async () => {
     await offers.openVoucherCategories();
     await offers.selectUnlimitedVoucherForm();
     await offers.fillUnlimitedContactForm({
@@ -42,7 +42,7 @@ test.describe("@regression @offers Offers", () => {
     await expect.soft(offers.reasonDropdown).toContainText("Rozwiązanie umowy");
   });
 
-  test("Should show required field errors on empty submit", async () => {
+  test("should show required field errors on empty submit", async () => {
     await offers.checkVoucher.click();
     await offers.orderVouchersButton.click();
     await offers.switchLanguageToPolish();
@@ -50,4 +50,19 @@ test.describe("@regression @offers Offers", () => {
 
     await offers.expectRequiredErrorsVisible();
   });
+  
+  test("should have correct hrefs for offers links", async () => {
+    await offers.assertLinksHref([
+      { locator: offers.unlimitedLink,      expectedHref: /\/unlimited/ },
+      { locator: offers.familyOfferLink,    expectedHref: /\/oferta-rodzinna/ },
+      { locator: offers.weddingLink,        expectedHref: /\/slub-i-zareczyny/ },
+      { locator: offers.birthdayLink,       expectedHref: /\/urodziny/ },
+      { locator: offers.sensoryCinemaLink,  expectedHref: /\/kino-przyjazne-sensorycznie/ },
+      { locator: offers.spinCityLink,       expectedHref: /spincity\.pl/ },
+      { locator: offers.pixelCityLink,      expectedHref: /pixel-city\.pl/ },
+      { locator: offers.gamingLink,         expectedHref: /\/granie/ },
+      { locator: offers.partnerOffersLink,  expectedHref: /\/oferty-partnerow/ },
+    ]);
+  });
+
 });
