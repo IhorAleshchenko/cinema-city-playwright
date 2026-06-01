@@ -51,7 +51,7 @@ test.describe("@regression @offers Offers", () => {
     await offers.expectRequiredErrorsVisible();
   });
   
-  test("should have correct hrefs for offers links", async () => {
+  test("should have correct hrefs for you and family offer links", async () => {
     await offers.assertLinksHref([
       { locator: offers.unlimitedLink,      expectedHref: /\/unlimited/ },
       { locator: offers.familyOfferLink,    expectedHref: /\/oferta-rodzinna/ },
@@ -62,6 +62,29 @@ test.describe("@regression @offers Offers", () => {
       { locator: offers.pixelCityLink,      expectedHref: /pixel-city\.pl/ },
       { locator: offers.gamingLink,         expectedHref: /\/granie/ },
       { locator: offers.partnerOffersLink,  expectedHref: /\/oferty-partnerow/ },
+    ]);
+  });
+
+  test("should have correct hrefs for business offer links", async () => {
+    await offers.assertLinksHref([
+      { locator: offers.unlimitedForBusinessLink,  expectedHref: /\/unlimited-gift-card/ },
+      { locator: offers.vouchersForBusinessLink,   expectedHref: /\/vouchery-dla-firm/ },
+      { locator: offers.hallRentalLink,            expectedHref: /\/wynajem-sal-eventy/ },
+      { locator: offers.vipZoneLink,               expectedHref: /\/strefa-vip-dla-firm/ },
+      { locator: offers.spinCityBusinessLink,      expectedHref: /spincity\.pl\/dla-firm/ },
+    ]);
+  });
+
+  test("should have correct hrefs for schools and groups offer links", async () => {
+    await offers.assertLinksHref([
+      { locator: offers.groupBookingLink,          expectedHref: /\/szkoly/ },
+      { locator: offers.youngCinemaLink,           expectedHref: /\/w-mlodym-kinie/ },
+      { locator: offers.teachersClubLink,          expectedHref: /\/klub-nauczyciela/ },
+      { locator: offers.childFilmWorldLink,        expectedHref: /\/filmowy-swiat-dziecka/ },
+      { locator: offers.imaxEducationLink,         expectedHref: /\/program-edukacyjny-kin-imax/ },
+      { locator: offers.filmsForGroupsLink,        expectedHref: /\/filmy-dla-grup/ },
+      { locator: offers.cinema4dxLink,             expectedHref: /\/interaktywne-kino-4dx/ },
+      { locator: offers.sensoryCinemaSchoolsLink,  expectedHref: /kino-przyjazne-sensorycznie/ },
     ]);
   });
 

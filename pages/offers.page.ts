@@ -41,6 +41,23 @@ export class Offers {
   readonly pixelCityLink: Locator;
   readonly gamingLink: Locator;
   readonly partnerOffersLink: Locator;
+
+  readonly forBusinessSection: Locator;
+  readonly unlimitedForBusinessLink: Locator;
+  readonly vouchersForBusinessLink: Locator;
+  readonly hallRentalLink: Locator;
+  readonly vipZoneLink: Locator;
+  readonly spinCityBusinessLink: Locator;
+
+  readonly forSchoolsSection: Locator;
+  readonly groupBookingLink: Locator;
+  readonly youngCinemaLink: Locator;
+  readonly teachersClubLink: Locator;
+  readonly childFilmWorldLink: Locator;
+  readonly imaxEducationLink: Locator;
+  readonly filmsForGroupsLink: Locator;
+  readonly cinema4dxLink: Locator;
+  readonly sensoryCinemaSchoolsLink: Locator;
   
 
   constructor(page: Page) {
@@ -84,6 +101,23 @@ export class Offers {
     this.pixelCityLink = this.offersSection.getByRole('link', { name: /pixel city/i });
     this.gamingLink = this.offersSection.getByRole('link', { name: /gaming w kinie/i });
     this.partnerOffersLink = this.offersSection.getByRole('link', { name: /oferty partnerów/i });
+
+    this.forBusinessSection = page.locator('div.row.mb-md', { has: page.locator('h3', { hasText: /^DLA FIRM I ORGANIZACJI$/ }) }).first();
+    this.unlimitedForBusinessLink = this.forBusinessSection.getByRole('link', { name: /unlimited dla firm/i });
+    this.vouchersForBusinessLink = this.forBusinessSection.getByRole('link', { name: /vouchery dla firm/i });
+    this.hallRentalLink = this.forBusinessSection.getByRole('link', { name: /wynajem sal/i });
+    this.vipZoneLink = this.forBusinessSection.getByRole('link', { name: /strefa vip dla firm/i });
+    this.spinCityBusinessLink = this.forBusinessSection.getByRole('link', { name: /spin city dla biznesu/i });
+
+    this.forSchoolsSection = page.locator('div.row.mb-md', { has: page.locator('h3', { hasText: /^DLA SZKÓŁ I GRUP ZORGANIZOWANYCH$/ }) }).first();
+    this.groupBookingLink = this.forSchoolsSection.getByRole('link', { name: /rezerwacje grupowe/i });
+    this.youngCinemaLink = this.forSchoolsSection.getByRole('link', { name: /w młodym kinie/i });
+    this.teachersClubLink = this.forSchoolsSection.getByRole('link', { name: /klub nauczyciela/i });
+    this.childFilmWorldLink = this.forSchoolsSection.getByRole('link', { name: /filmowy świat dziecka/i });
+    this.imaxEducationLink = this.forSchoolsSection.getByRole('link', { name: /oferta edukacyjna imax/i });
+    this.filmsForGroupsLink = this.forSchoolsSection.getByRole('link', { name: /wybrane filmy dla grup/i });
+    this.cinema4dxLink = this.forSchoolsSection.getByRole('link', { name: /interaktywne kino 4dx/i });
+    this.sensoryCinemaSchoolsLink = this.forSchoolsSection.getByRole('link', { name: /kino przyjazne sensorycznie/i });
   }
 
   async openVoucherCategories() {
