@@ -1,3 +1,4 @@
+import { ECDH } from "node:crypto";
 import { test, expect } from "../../fixtures/errorListener.fixture";
 import { Header } from "../../pages/components/header.component";
 import { Offers } from "../../pages/offers.page";
@@ -18,6 +19,16 @@ test.describe("@regression @offers Offers", () => {
     await offers.orderVouchersButton.click();
 
     await expect(offers.categoryHeading).toBeVisible();
+  });
+
+    test("should show required field errors on empty submit", async () => {
+    await offers.checkVoucher.click();
+    await offers.orderVouchersButton.click();
+    await offers.switchLanguageToPolish();
+    await expect(offers.submitButton).toBeVisible()
+    await offers.submitButton.click();
+
+    await offers.expectRequiredErrorsVisible();
   });
 
   test("should fill up Voucher form", async () => {
@@ -42,15 +53,6 @@ test.describe("@regression @offers Offers", () => {
     await expect.soft(offers.reasonDropdown).toContainText("Rozwiązanie umowy");
   });
 
-  test("should show required field errors on empty submit", async () => {
-    await offers.checkVoucher.click();
-    await offers.orderVouchersButton.click();
-    await offers.switchLanguageToPolish();
-    await offers.submitButton.click();
-
-    await offers.expectRequiredErrorsVisible();
-  });
-  
   test("should have correct hrefs for you and family offer links", async () => {
     await offers.assertLinksHref([
       { locator: offers.unlimitedLink,      expectedHref: /\/unlimited/ },
@@ -87,5 +89,6 @@ test.describe("@regression @offers Offers", () => {
       { locator: offers.sensoryCinemaSchoolsLink,  expectedHref: /kino-przyjazne-sensorycznie/ },
     ]);
   });
+
 
 });

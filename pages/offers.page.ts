@@ -152,8 +152,12 @@ export class Offers {
   }
 
   async switchLanguageToPolish() {
-    await this.languageDropdownButton.click();
-    await this.polishLanguageLink.click();
+    await this.languageDropdownButton.waitFor({ state: 'visible', timeout: 3000 }).catch(() => {});
+    const isEnglish = await this.languageDropdownButton.isVisible();
+    if (isEnglish) {
+      await this.languageDropdownButton.click();
+      await this.polishLanguageLink.click();
+    }
   }
 
   async expectRequiredErrorsVisible() {
